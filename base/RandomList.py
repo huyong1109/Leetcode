@@ -5,8 +5,10 @@ import random
 class RandomList(object):
     def __init__(self, items):
         self.items = items
+        print('List memebers: ')
+        print(items)
      
-    def createRandomList(self, listSize=1, length=100, randomsize=True):
+    def createRandomList(self, listSize=1, length=100, randomsize=True, sort=False):
         """
         :type listsize: int 
             number of strings will be created
@@ -30,7 +32,43 @@ class RandomList(object):
             print(e)
             print('Check parameters in createRandomList')
 
-        re = [[random.choice(self.items) for i in range(length)] for length in lengths]
+        if sort:
+            re = [sorted([random.choice(self.items) for i in range(length)]) for length in lengths]
+        else:
+            re = [[random.choice(self.items) for i in range(length)] for length in lengths]
+
+        return re
+
+    def createNonDuplicateList(self, listSize=1, length=100, randomsize=True, sort=False):
+        """
+        :type listsize: int 
+            number of strings will be created
+        :type length: int
+            length of string
+        :type randomsize: bool
+            True: random length for each string
+            False: same length for all strings
+        :rtype: [String]
+            list of strings
+        """
+        random.seed(1314)
+        re = []
+        if length > len(self.items):
+            print('length larger than the size of items, set to {} already!'.format(len(self.items)))
+            length = len(self.items)
+        try:
+            if randomsize:
+                lengths = [random.choice(range(1, length + 1)) for i in range(listSize)]
+            else:
+                lengths = [length]*listSize
+        except Exception as e:
+            print(e)
+            print('Check parameters in createRandomList')
+
+        if sort:
+            re = [sorted(random.sample(self.items, length)) for length in lengths]
+        else:
+            re = [random.sample(self.items, length) for length in lengths]
 
         return re
 
@@ -87,23 +125,7 @@ class IntList(RandomList):
             choose int from range(min, max)
         """
         
-        RandomList.__init__(self, range(IntMin, IntMax))
-
+        RandomList.__init__(self, range(IntMin, IntMax+1))
 
     
-    def createRandomInt(self, size=1, length=100, randomsize=True):
-        """
-        :type size: int 
-            number of strings will be created
-        :type length: int
-            length of string
-        :type randomsize: bool
-            True: random length for each string
-            False: same length for all strings
-        :rtype: [String]
-            list of strings
-        """
-        re = RandomList.createRandomList(self, size, length)
 
-
-        return re
