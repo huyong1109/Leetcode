@@ -1,9 +1,13 @@
-### Lists of random integers
-### e.g [ [1, 2], [1,1,1], ...]
+import sys
 import random
 
+### Lists of random integers
+### e.g [ [1, 2], [1,1,1], ...]
 class RandomList(object):
     def __init__(self, items):
+        if not items:
+            print('Object items empty!')
+            sys.exit(0)
         self.items = items
         print('List memebers: ')
         print(items)
@@ -72,7 +76,36 @@ class RandomList(object):
 
         return re
 
-
+    def randomSubList(self, origList):
+        """
+        create a nonempty randome list from a given list
+        :type: list
+        :rtype: list 
+        """
+        if not origList:
+            return []
+        listLen = len(origList)
+        if listLen == 1:
+            if random.random > 0.5:
+                return []
+            else:
+                return origList
+        else:
+            sliceInd = random.sample(range(listLen), 2)
+            return origList[sliceInd[0]:sliceInd[1]]
+    
+    def randomSampleList(self, origList):
+        """
+        create a nonempty randome list from a given list
+        :type: list
+        :rtype: list 
+        """
+        if not origList:
+            return []
+        listLen = len(origList)
+        subLen = random.choice(range(listLen + 1))
+        sliceInd = random.sample(range(listLen), subLen)
+        return [origList[i] for i in sliceInd]
 
 class StringList(RandomList):
     # character sets
@@ -115,6 +148,15 @@ class StringList(RandomList):
 
 
         return re
+    
+    def randomSubString(self, origString):
+        """
+        get substring  
+        """
+        stringList = list(origString)
+        subStringList = RandomList.randomSubList(self, stringList)
+
+        return ''.join(subStringList)
 
 
 class IntList(RandomList):
