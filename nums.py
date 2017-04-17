@@ -91,14 +91,49 @@ class Solution(object):
 
         return res
 
+    def numberOfArithmeticSlices(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """"""
+        """
+        if len(A) <= 2:
+            return 0
+        Arithmetrics = []
+        diff = A[1] - A[0]
+        curLen = 0 
+        for i in range(2, len(A)):
+            if A[i] - A[i-1] == diff:
+                curLen += 1
+            else:
+                if curLen > 0:
+                    Arithmetrics.append(curLen)
+                    curLen = 0
+                diff = A[i] - A[i-1]
+        if curLen >0:
+            Arithmetrics.append(curLen)
+
+
+        print Arithmetrics
+        return sum([val*(val+1)/2 for val in Arithmetrics])
+               
+    def reconstructQueue(self, people):
+        """
+        :type people: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        
+
+
+
 
 def main():
-    intList = IntList(1, 20)
-    intLists = intList.createNonDuplicateList(20, 10)
+    # intList = IntList(1, 20)
+    # intLists = intList.createNonDuplicateList(20, 10)
 
-    for nums in intLists:
-        print(nums)
-        print('output: ', Solution().find132pattern(nums))
+    # for nums in intLists:
+    #     print(nums)
+    #     print('output: ', Solution().find132pattern(nums))
         # print('output: ', Solution().threeSumForce(nums))
 
         # subNums = intList.randomSampleList(nums)
@@ -108,6 +143,7 @@ def main():
 
         # print(nums, Solution().nextGreaterElementIter(nums))
     
+    print(Solution().numberOfArithmeticSlices([1,2,3,4]) )
 
 if __name__ == '__main__':
     main()
